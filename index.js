@@ -1,12 +1,72 @@
+const usersArray = [
+  {
+    firstName: "Kirby",
+    lastName: "Doyle",
+    id: "b71794e5-851e-44b5-9eec-1dd4e897e3b8",
+    isActive: false,
+    balance: "$3,570.06",
+    gender: "male",
+  },
+  {
+    firstName: "Tracie",
+    lastName: "May",
+    id: "1af0e9ee-66fc-4298-b8ce-5d99bcbaac05",
+    isActive: false,
+    balance: "$1,547.73",
+    gender: "female",
+  },
+  {
+    firstName: "Kendra",
+    lastName: "Hines",
+    id: "5e92af3a-b08e-4689-bdeb-3226300470e3",
+    isActive: true,
+    balance: "$12,383.08",
+    gender: "female",
+  },
+  {
+    firstName: "Kinney",
+    lastName: "Howard",
+    id: "0ad2388d-83e1-4831-9cc4-e3581f8edf36",
+    isActive: false,
+    balance: "$3,207.06",
+    gender: "male",
+  },
+  {
+    firstName: "Howard",
+    lastName: "Gilmore",
+    id: "0719205d-c965-44cb-a128-708cf335b26c",
+    isActive: true,
+    balance: "$21,307.75",
+    gender: "male",
+  },
+  {
+    firstName: "Rachelle",
+    lastName: "Schneider",
+    id: "04012184-651b-41eb-9642-d362fedff02f",
+    isActive: true,
+    balance: "$35,121.49",
+    gender: "female",
+  },
+  {
+    firstName: "Lizzie",
+    lastName: "Alford",
+    id: "598ca7ec-888e-494d-ae94-c21ace3ffa52",
+    isActive: false,
+    balance: "$4,382.94",
+    gender: "female",
+  },
+];
+
 // ***************************************************************************
 // Iteration 1 - `for...of` loop
 // ***************************************************************************
 
-const getFirstNames = arr => {
+const getFirstNames = (arr) => {
   const userFirstNames = [];
   for (let user of arr) {
-    // Your code goes here ...
+    userFirstNames.push(user.firstName);
   }
+  console.log(userFirstNames);
 };
 
 getFirstNames(usersArray);
@@ -17,8 +77,15 @@ getFirstNames(usersArray);
 // Iteration 2 - `for...of` loop and ES6 string literals `${}`
 // ***************************************************************************
 
-const getFullNames = arr => {
-  // Your code goes here ...
+const getFullNames = (arr) => {
+  const userNames = [];
+  let fullName = "";
+
+  for (let user of arr) {
+    fullName = `${user.firstName}  ${user.lastName}`;
+    userNames.push(fullName);
+  }
+  console.log(userNames);
 };
 
 getFullNames(usersArray);
@@ -30,8 +97,15 @@ getFullNames(usersArray);
 // Iteration 3 - ES6 destructuring , for of loop, object literal
 // ***************************************************************************
 
-const getUsersCreditDetails = arr => {
-  // Your code goes here ...
+const getUsersCreditDetails = (arr) => {
+  let array = [];
+
+  for (let user of arr) {
+    let { firstName, lastName, balance } = user;
+    let newObjt = { firstName, lastName, balance };
+    array.push(newObjt);
+  }
+  console.log(array);
 };
 
 getUsersCreditDetails(usersArray);
@@ -48,8 +122,26 @@ getUsersCreditDetails(usersArray);
 // Iteration 4 - practice `.filter()` method and how to return two elements
 // ***************************************************************************
 
-const genderView = users => {
-  // Your code goes here ...
+const genderView = (users) => {
+  //GIRLS
+  let filteredArray = usersArray.filter((elem, ind) => elem.gender == "female");
+  let femaleUsers = filteredArray.map((elem, ind) => {
+    return `${elem.firstName} ${elem.lastName}`;
+  });
+
+  //BOYS
+  let filteredArray2 = usersArray.filter((elem, ind) => {
+    if (elem.gender == "male") {
+      return true;
+    }
+  });
+  let maleUsers = filteredArray2.map((elem, ind) => {
+    return `${elem.firstName} ${elem.lastName}`;
+  });
+  // console.log(`maleUsers:`, mappedArray2)
+
+  let output = { femaleUsers, maleUsers };
+  return output;
 };
 
 genderView(usersArray);
@@ -65,11 +157,13 @@ genderView(usersArray);
 
 const data = genderView(usersArray);
 
-const genderCount = data => {
-  // Your code goes here ...
+const genderCount = (data) => {
+  console.log(`female: ${data.femaleUsers.length}`);
+  console.log(`male: ${data.maleUsers.length}`);
 };
 
 genderCount(data);
+
 // expected output:
 // Female: 4
 // Male: 3
@@ -78,10 +172,18 @@ genderCount(data);
 // Bonus - Iteration 6
 // ***************************************************************************
 
-const promo20 = users => {
-  // Your code goes here ...
+const promo20 = (users) => {
+  let filteredArray = users.filter(
+    (elem) => parseFloat(elem.balance.slice(1).replace(",", "")) > 20000
+  );
+  filteredArray.forEach((elem) =>
+    console.log(
+      `Dear ${elem.firstName},since your balance is ${elem.balance}, you are eligible to apply for this awesome credit card`
+    )
+  );
 };
 
+promo20(usersArray);
 // expected output:
 // Dear Howard, since your balance is $21,307.75, you are eligible to apply for this awesome credit card.
 // Dear Rachelle, since your balance is $35,121.49, you are eligible to apply for this awesome credit card.
@@ -90,8 +192,12 @@ const promo20 = users => {
 // Bonus - Iteration 7
 // ***************************************************************************
 
-const addActive = users => {
-  // Your code goes here ...
+const addActive = (users) => {
+  for (let user of users) {
+    user.isActive = true;
+    // let {isActive, ...remaining} =user
+    console.log(user);
+  }
 };
 
 addActive(usersArray);
